@@ -25,6 +25,6 @@ jobs:
             wget https://developer.salesforce.com/media/salesforce-cli/sfdx/channels/stable/sfdx-linux-x64.tar.xz
             mkdir sfdx-cli
             tar xJf sfdx-linux-x64.tar.xz -C sfdx-cli --strip-components 1
-            ./sfdx-cli/install
+            ./sfdx-cli/bin/install
       - name: 'show salesforce cli version'
         run : sfdx --version
