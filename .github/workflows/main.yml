@@ -1,4 +1,4 @@
-name: Managed Package version Creation
+name: Test workflow
 
 # Definition when the workflow should run
 
@@ -15,6 +15,6 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: 'Install Salesforce CLI'
+      - name: 'Run shell commands'
         run: |
                 echo "hello world"
