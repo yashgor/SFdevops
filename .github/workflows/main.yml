@@ -33,7 +33,7 @@ jobs:
         uses: dawidd6/action-send-mail@v3
         with:
           # mail server settings
-          server_address: mail.outlook.com
+          server_address: smtp.office365.com
           server_port: 587
           # user credentials
           username: ${{ secrets.EMAIL_USERNAME }}
