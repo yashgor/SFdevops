@@ -3,7 +3,8 @@ name: Test workflow
 # Definition when the workflow should run
 
 on:
-  workflow_dispatch:
+  pull_request:
+    branches: [ master ]
 
 # Jobs to be executed
 
