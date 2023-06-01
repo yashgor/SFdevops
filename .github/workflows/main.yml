@@ -19,7 +19,7 @@ jobs:
         run: |
                 echo "hello world"
       - name: 'Checkout source code'
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: 'Install Salesforce CLI'
         run: |
             wget https://developer.salesforce.com/media/salesforce-cli/sfdx/channels/stable/sfdx-linux-x64.tar.xz
