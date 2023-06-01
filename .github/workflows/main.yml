@@ -42,6 +42,7 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: 'Run shell commands'
-        run: |
+       - name: 'check version'
+         run: |
+            export PATH=~/sfdx/bin:$PATH
             sfdx --version
