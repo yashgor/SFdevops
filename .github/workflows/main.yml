@@ -26,25 +26,6 @@ jobs:
             wget https://developer.salesforce.com/media/salesforce-cli/sfdx/channels/stable/sfdx-linux-x64.tar.xz
             mkdir ~/sfdx
             tar xJf sfdx-linux-x64.tar.xz -C ~/sfdx --strip-components 1
-            export PATH=~/sfdx/bin:$PATH
             PATH=~/sfdx/bin:$PATH
       - name: 'show salesforce cli version'
         run : sfdx --version
-      - name: Send mail
-        if: always()
-        uses: dawidd6/action-send-mail@v3
-        with:
-          # mail server settings
-          server_address: smtp.gmail.com
-          server_port: 465
-          # user credentials
-          username: ${{ secrets.EMAIL_USERNAME }}
-          password: ${{ secrets.EMAIL_PASSWORD }}
-          # email subject
-          subject: ${{ github.job }} job of ${{ github.repository }} has ${{ job.status }}
-          # email body as text
-          body: ${{ github.job }} job in worflow ${{ github.workflow }} of ${{ github.repository }} has ${{ job.status }}. Do not merge PR.
-          # comma-separated string, send email to
-          to: nickgor48@gmail.com
-          # from email name
-          from: Yash Gor
