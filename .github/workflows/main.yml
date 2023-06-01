@@ -32,8 +32,9 @@ jobs:
             sfdx --version
       - name: 'check version'
         run: |
+            echo 'PATH=~/sfdx/bin:$PATH' >> ~/.bash_profile
             cat ~/.bash_profile
             sfdx --version
-#           export PATH=~/sfdx/bin:$PATH
-#           echo 'PATH=~/sfdx/bin:$PATH' >> ~/.bash_profile
+#           
+#           
 
