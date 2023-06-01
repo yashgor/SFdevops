@@ -29,3 +29,6 @@ jobs:
             export PATH=~/sfdx/bin:$PATH
             echo 'PATH=~/sfdx/bin:$PATH' >> ~/.bashrc
             cat ~/.bashrc
+      - name: 'open bashrc'
+        run: |
+            cat ~/.bashrc
