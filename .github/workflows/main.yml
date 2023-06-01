@@ -35,6 +35,7 @@ jobs:
           # mail server settings
           server_address: smtp.office365.com
           server_port: 587
+          secureConnection: false
           # user credentials
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
