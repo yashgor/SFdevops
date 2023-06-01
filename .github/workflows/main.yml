@@ -29,5 +29,5 @@ jobs:
             export PATH=~/sfdx/bin:$PATH
             echo 'PATH=~/sfdx/bin:$PATH' >> ~/.bashrc
             echo 'PATH=~/sfdx/bin:$PATH' >> ~/.bash_profile
-      - name: 'show salesforce cli version'
-        run : sfdx --version
+            cat ~/.bashrc
+            cat ~/.bash_profile
