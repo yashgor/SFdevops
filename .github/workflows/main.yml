@@ -29,6 +29,6 @@ jobs:
             export PATH=~/sfdx/bin:$PATH
             echo 'PATH=~/sfdx/bin:$PATH' >> ~/.bashrc
             cat ~/.bashrc
-      - name: 'open bashrc'
+      - name: 'sfdx version'
         run: |
-            cat ~/.bashrc
+            sfdx --version
