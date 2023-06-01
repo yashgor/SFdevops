@@ -18,7 +18,7 @@ jobs:
     steps:
       - name: 'Run shell commands'
         run: |
-                echo "hello world from test branch"
+            echo "hello world from test branch"
       - name: 'Checkout source code'
         uses: actions/checkout@v3
       - name: 'Install Salesforce CLI'
@@ -37,3 +37,11 @@ jobs:
       - name: 'check commands'
         run: |
             sfdx commands
+ test-job:
+    name: test-job
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 'Run shell commands'
+        run: |
+            sfdx --version
