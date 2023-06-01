@@ -18,7 +18,7 @@ jobs:
     steps:
       - name: 'Run shell commands'
         run: |
-                echo "hello world"
+                echo "hello world from test branch"
       - name: 'Checkout source code'
         uses: actions/checkout@v3
       - name: 'Install Salesforce CLI'
