@@ -3,8 +3,7 @@ name: Test workflow
 # Definition when the workflow should run
 
 on:
-  pull_request:
-    branches: [ master ]
+  workflow_dispatch:
 
 # Jobs to be executed
 
@@ -18,32 +17,37 @@ jobs:
     steps:
       - name: 'Run shell commands'
         run: |
-                echo "hello world"
+            echo "hello world from test branch"
       - name: 'Checkout source code'
         uses: actions/checkout@v3
       - name: 'Install Salesforce CLI'
         run: |
             wget https://developer.salesforce.com/media/salesforce-cli/sfdx/channels/stable/sfdx-linux-x64.tar.xz
-            mkdir sfdx-cli
-            tar xJf sfdx-linux-x64.tar.xz -C sfdx-cli --strip-components 1
-            ./sfdx-cli/install
-      - name: 'show salesforce cli version'
-        run : sfdx --version
-      - name: Send mail
-        if: always()
-        uses: dawidd6/action-send-mail@v3
-        with:
-          # mail server settings
-          server_address: smtp.gmail.com
-          server_port: 465
-          # user credentials
-          username: ${{ secrets.EMAIL_USERNAME }}
-          password: ${{ secrets.EMAIL_PASSWORD }}
-          # email subject
-          subject: ${{ github.job }} job of ${{ github.repository }} has ${{ job.status }}
-          # email body as text
-          body: ${{ github.job }} job in worflow ${{ github.workflow }} of ${{ github.repository }} has ${{ job.status }}. Do not merge PR.
-          # comma-separated string, send email to
-          to: nickgor48@gmail.com
-          # from email name
-          from: Yash Gor
+            mkdir ~/sfdx
+            tar xJf sfdx-linux-x64.tar.xz -C ~/sfdx --strip-components 1
+            export PATH=~/sfdx/bin:$PATH
+            echo 'PATH=~/sfdx/bin:$PATH' >> ~/.bash_profile
+            cat ~/.bash_profile
+            sfdx --version
+      - name: 'check version'
+        run: |
+            export PATH=~/sfdx/bin:$PATH
+            sfdx --version
+      - name: 'check commands'
+        run: |
+            sfdx commands
+ test-job:
+    name: test-job
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 'Install Salesforce CLI'
+        run: |
+            wget https://developer.salesforce.com/media/salesforce-cli/sfdx/channels/stable/sfdx-linux-x64.tar.xz
+            mkdir ~/sfdx
+            tar xJf sfdx-linux-x64.tar.xz -C ~/sfdx --strip-components 1
+            export PATH=~/sfdx/bin:$PATH
+            echo 'PATH=~/sfdx/bin:$PATH' >> ~/.bash_profile
+      - name: 'check version'
+        run: |
+            sfdx --version
