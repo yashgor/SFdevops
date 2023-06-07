@@ -22,18 +22,18 @@ jobs:
         uses: actions/checkout@v3
       - name: 'Install Salesforce CLI'
         run: |
+            cd /home/runner/work/
             wget https://developer.salesforce.com/media/salesforce-cli/sfdx/channels/stable/sfdx-linux-x64.tar.xz
-            mkdir ~/sfdx
-            tar -xJf sfdx-linux-x64.tar.xz -C ~/sfdx --strip-components 1
-            export PATH=~/sfdx/bin:$PATH
-            echo 'PATH=~/sfdx/bin:$PATH' >> ~/.bash_profile
+            mkdir sfdx
+            tar -xJf sfdx-linux-x64.tar.xz -C sfdx --strip-components 1
+            export PATH=/sfdx/bin:$PATH
+            echo 'PATH=/sfdx/bin:$PATH' >> ~/.bash_profile
             sfdx --version
-            ls ~ | grep sfdx
-            ls ~/sfdx
+            ls | grep sfdx
+            ls /sfdx
       - name: 'check version'
         run: |
             pwd
-            export PATH=~/sfdx/bin:$PATH
             sfdx --version
       - name: 'check commands'
         run: |
