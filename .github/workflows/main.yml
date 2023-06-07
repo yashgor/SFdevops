@@ -38,7 +38,7 @@ jobs:
       - name: 'check commands'
         run: |
             pwd
-            sfdx commands
+            sudo sfdx commands
 #     - name: Send mail
 #       if: always()
 #       uses: dawidd6/action-send-mail@v3
