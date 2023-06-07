@@ -32,10 +32,12 @@ jobs:
             ls ~/sfdx
       - name: 'check version'
         run: |
+            pwd
             export PATH=~/sfdx/bin:$PATH
             sfdx --version
       - name: 'check commands'
         run: |
+            pwd
             sfdx commands
 #     - name: Send mail
 #       if: always()
