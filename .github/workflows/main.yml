@@ -29,6 +29,8 @@ jobs:
             echo 'PATH=~/sfdx/bin:$PATH' >> ~/.bash_profile
             cat ~/.bash_profile
             sfdx --version
+            ls -ltr | grep sfdx
+            ls sfdx
       - name: 'check version'
         run: |
             export PATH=~/sfdx/bin:$PATH
