@@ -21,7 +21,8 @@ jobs:
       - name: 'Checkout source code'
         uses: actions/checkout@v3
       - name: 'Install Salesforce CLI'
-        run: | 
+        run: |
+            npm install sfdx-cli -g
             npm -v
       - name: 'check version'
         run: |
