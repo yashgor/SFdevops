@@ -21,18 +21,8 @@ jobs:
       - name: 'Checkout source code'
         uses: actions/checkout@v3
       - name: 'Install Salesforce CLI'
-        run: |
-            cd ~
-            wget https://developer.salesforce.com/media/salesforce-cli/sfdx/channels/stable/sfdx-linux-x64.tar.xz
-            mkdir ~/sfdx
-            tar -xJf sfdx-linux-x64.tar.xz -C ~/sfdx --strip-components 1
-            npm install sfdx-cli -g
-            export PATH=~/sfdx/bin:$PATH
-            echo 'PATH=~/sfdx/bin:$PATH' >> ~/.bash_profile
-            cat ~/.bash_profile
+        run: | 
             npm -v
-            ls | grep sfdx
-            ls sfdx
       - name: 'check version'
         run: |
             cd ~
