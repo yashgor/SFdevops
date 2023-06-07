@@ -29,6 +29,7 @@ jobs:
             export PATH=~/sfdx/bin:$PATH
             echo 'PATH=~/sfdx/bin:$PATH' >> ~/.bash_profile
             cat ~/.bash_profile
+            npm -v
             ls | grep sfdx
             ls sfdx
       - name: 'check version'
