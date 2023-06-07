@@ -23,15 +23,12 @@ jobs:
       - name: 'Install Salesforce CLI'
         run: |
             npm install sfdx-cli -g
-            npm -v
       - name: 'check version'
         run: |
-            cd ~
             sfdx --version
       - name: 'check commands'
         run: |
-            cd ~
-            sudo sfdx commands
+            sfdx commands
 #     - name: Send mail
 #       if: always()
 #       uses: dawidd6/action-send-mail@v3
