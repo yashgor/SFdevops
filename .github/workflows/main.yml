@@ -29,6 +29,9 @@ jobs:
       - name: 'check commands'
         run: |
             sfdx commands
+      - name: 'check orgs'
+        run: |
+            sf org list --all
 #     - name: Send mail
 #       if: always()
 #       uses: dawidd6/action-send-mail@v3
