@@ -1,15 +1,17 @@
 ## Jira Ticket Link
 
 ## Description
+Describe your changes in detail 
 
-Please include a summary of the change and what has changed. Please also include relevant context. List any dependencies that are required for this change.
+## Related Issue
+This project only accepts pull requests related to open issues
+If suggesting a new feature or change, please discuss it in an issue first
+
+## Motivation and Context
+Why is this change required? What problem does it solve?
 
 
-#### Type of change
-
-Please delete options that are not relevant.
-
-- [ ] New feature (change which adds functionality)
-- [ ] Bug fix (change which fixes an issue)
-- [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
-- [ ] This change requires to be documented
+## How Has This Been Tested?
+Please describe in detail how you tested your changes.
+Include details of your testing environment, and the tests you ran to...
+see how your change affects other areas of the code, etc.
