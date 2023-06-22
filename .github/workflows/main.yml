@@ -3,7 +3,7 @@ name: Test workflow
 # Definition when the workflow should run
 
 on:
-  workflow_dispatch:
+  push:
 
 # Jobs to be executed
 
