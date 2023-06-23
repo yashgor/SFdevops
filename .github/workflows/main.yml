@@ -15,9 +15,6 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: 'Run shell commands'
-        run: |
-            echo "hello world"
       - name: 'Checkout source code'
         uses: actions/checkout@v3
       - name: 'Install Salesforce CLI'
@@ -26,9 +23,17 @@ jobs:
       - name: 'check version'
         run: |
             sfdx --version
-      - name: 'check commands'
+      - name: 'check if scratch org exists or not'
         run: |
-            sfdx commands
+            sf org list --all >> text.txt
+            sf org login jwt --username ${MEDSLEUTHINC_USERNAME} --jwt-key-file .github/jwt/server.key --client-id ${MEDSLEUTHINC_CONSUMER_KEY} -a devhub-org -d
+            if grep "qa" text.txt
+            then
+                echo "scratch org exists"
+            else
+                echo "scratch org does not exist & creating new one"
+#                sf org create scratch -f config/project-scratch-def.json --client-id ${MEDSLEUTHINC_CONSUMER_KEY} -a qa-org -d --no-namespace --duration-days 1
+            fi
 #     - name: Send mail
 #       if: always()
 #       uses: dawidd6/action-send-mail@v3
