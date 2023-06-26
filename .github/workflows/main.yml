@@ -25,14 +25,14 @@ jobs:
             sfdx --version
       - name: 'check if scratch org exists or not'
         run: |
-            sf org list --all >> text.txt
             sf org login jwt --username ${MEDSLEUTHINC_USERNAME} --jwt-key-file .github/jwt/server.key --client-id ${MEDSLEUTHINC_CONSUMER_KEY} -a devhub-org -d
+            sf org list --all >> text.txt
             if grep "qa" text.txt
             then
                 echo "scratch org exists"
             else
                 echo "scratch org does not exist & creating new one"
-#                sf org create scratch -f config/project-scratch-def.json --client-id ${MEDSLEUTHINC_CONSUMER_KEY} -a qa-org -d --no-namespace --duration-days 1
+                sf org create scratch -f config/project-scratch-def.json --client-id ${MEDSLEUTHINC_CONSUMER_KEY} -a qa-org --username qatest@example.com --name qa-org --admin-email yash.gor@abjayon.com --duration-days 1
             fi
       - name: 'check if package exists or not'
         run: |
