@@ -23,7 +23,7 @@ jobs:
       - name: 'check version'
         run: |
             sfdx --version
-      - name: 'check if scratch org exists or not'
+      - name: 'scrath org validation'
         run: |
             sf org login jwt --username ${MEDSLEUTHINC_USERNAME} --jwt-key-file .github/jwt/server.key --client-id ${MEDSLEUTHINC_CONSUMER_KEY} -a devhub-org -d
             rm -rf testing.json
