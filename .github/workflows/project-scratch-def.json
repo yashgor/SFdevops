@@ -1,0 +1,43 @@
+{
+  "orgName": "my company",
+  "edition": "Developer",
+  "features": ["PersonAccounts","EnableSetPasswordInApi","Communities"],
+  "objectSettings": {
+    "opportunity": {
+      "sharingModel": "private"
+    },
+    "account": {
+      "sharingModel": "private"
+    },
+    "case": {
+      "sharingModel": "private"
+    },
+    "contact": {
+      "sharingModel": "private"
+    }
+  },
+  "settings": {
+    "lightningExperienceSettings": {
+      "enableS1DesktopEnabled": true
+    },
+    "mobileSettings": {
+      "enableS1EncryptedStoragePref2": false
+    },
+    "communitiesSettings": {
+      "enableNetworksEnabled": true
+    },
+    "experienceBundleSettings": {
+      "enableExperienceBundleMetadata": true
+    },
+    "accountSettings": {
+      "enableAccountTeams": true
+    },
+    "contentSettings": {
+	"enableSiteGuestUserToUploadFiles": true 
+    },
+    "chatterSettings": {
+    "enableChatter": true
+  }
+  }
+}
+
