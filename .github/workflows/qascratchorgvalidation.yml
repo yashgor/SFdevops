@@ -1,0 +1,76 @@
+# Unique name for this workflow
+name: Validationg Qa Scratch Org Automation
+
+# Definition when the workflow should run
+
+on:
+  workflow_dispatch:
+
+# Jobs to be executed
+
+jobs:
+
+ environment-setup:
+  
+    name: environment-setup
+    runs-on: ubuntu-latest
+    
+    steps:
+    
+      # Checkout the source code
+      - name: 'Checkout source code'
+        uses: actions/checkout@v2
+        
+      # Cache node_modules to speed up the process
+      - name: Setup Node Environment
+        uses: actions/setup-node@v2-beta
+        with:
+          node-version: '12'
+          
+ automation:
+    name: Qa Scratch Org Automation
+    needs: [environment-setup]
+    runs-on: ubuntu-latest
+    steps:
+    
+    # Install Salesforce CLI
+      - name: 'Install Salesforce CLI'
+        run: |
+            wget https://developer.salesforce.com/media/salesforce-cli/sfdx-linux-amd64.tar.xz
+            mkdir sfdx-cli
+            tar xJf sfdx-linux-amd64.tar.xz -C sfdx-cli --strip-components 1
+            ./sfdx-cli/install
+            
+    # Run Salesforce CLI Scanner For Security checks
+      - name: 'Check for SFDX Update'
+        run: sfdx update
+        
+    # Install Salesforce CLI Scanner
+      - name: 'Install Salesforce CLI Scanner'
+        run: sfdx plugins:install @salesforce/sfdx-scanner
+
+    # Checkout the source code
+      - name: 'Checkout source code'
+        uses: actions/checkout@v2
+    # Checkout the source code
+      - name: 'Scratch Org Validation & Creation'
+        run: |
+            sf org login jwt --username ${MEDSLEUTHINC_USERNAME} --jwt-key-file .github/jwt/server.key --client-id ${MEDSLEUTHINC_CONSUMER_KEY} -a devhub-org -d
+            rm -rf testing.json
+            scratchorgname=project-org
+            username=project@example.com
+            sf org display --target-org ${username} >> testing.json
+            if grep $scratchorgname testing.json;
+            then
+                if grep $username testing.json;
+                then
+                    echo "scratch org and user exists"
+                else
+                    echo " "
+                fi
+            else
+                echo "scratch org does not exist & creating new one"
+                sf org create scratch -f config/project-scratch-def.json --client-id ${MEDSLEUTHINC_CONSUMER_KEY} -a ${scratchorgname} --username ${username} --name ${scratchorgname} --admin-email yash.gor@abjayon.com --duration-days 1
+                password=`sf force user password generate --target-org ${username} --json | grep password`
+                echo "Scratch org id:"$username "Scratch org :"$password
+            fi
