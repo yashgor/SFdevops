@@ -52,6 +52,19 @@ jobs:
     # Checkout the source code
       - name: 'Checkout source code'
         uses: actions/checkout@v2
+      - name: 'Run shell commands'
+        run: |
+            echo "hello world"
+      - name: 'check version'
+        run: |
+            sfdx --version
+      - name: 'check commands'
+        run: |
+            sfdx commands
+      - name: "check org list"
+        run : |
+            sf org login jwt --username ${MEDSLEUTHINC_USERNAME} --jwt-key-file .github/jwt/server.key --client-id ${MEDSLEUTHINC_CONSUMER_KEY} -a devhub-org -d
+            sf org list --all
     # Checkout the source code
       - name: 'Scratch Org Validation & Creation'
         run: |
