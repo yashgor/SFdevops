@@ -4,79 +4,40 @@ name: Validationg Qa Scratch Org Automation
 # Definition when the workflow should run
 
 on:
-  workflow_dispatch:
+  push:
 
 # Jobs to be executed
 
 jobs:
-
- environment-setup:
-  
-    name: environment-setup
-    runs-on: ubuntu-latest
-    
-    steps:
-    
-      # Checkout the source code
-      - name: 'Checkout source code'
-        uses: actions/checkout@v2
-        
-      # Cache node_modules to speed up the process
-      - name: Setup Node Environment
-        uses: actions/setup-node@v2-beta
-        with:
-          node-version: '12'
           
  automation:
     name: Qa Scratch Org Automation
-    needs: [environment-setup]
     runs-on: ubuntu-latest
     steps:
-    
+    # Cache node_modules to speed up the process
+      - name: 'Setup Node Environment'
+        uses: actions/setup-node@v3
+        with:
+            node-version: '16'
     # Install Salesforce CLI
       - name: 'Install Salesforce CLI'
         run: |
-            npm install sfdx-cli -g
+            npm install @salesforce/cli --location=global
+            nodeInstallPath=$(npm config get prefix)
+            echo "$nodeInstallPath/bin" >> $GITHUB_PATH
+            sf --version
             
+    # Run Salesforce CLI Scanner For Security checks
+      - name: 'Check for SF Update'
+        run: sf update
+        
     # Install Salesforce CLI Scanner
       - name: 'Install Salesforce CLI Scanner'
-        run: sfdx plugins:install @salesforce/sfdx-scanner
-
-    # Checkout the source code
-      - name: 'Checkout source code'
-        uses: actions/checkout@v2
-      - name: 'Run shell commands'
+        run: sf plugins install scanner
+        
+    # Fetch all scratch orgs
+      - name: 'fetch all scratch org'
         run: |
-            echo "hello world"
-      - name: 'check version'
-        run: |
-            sfdx --version
-      - name: 'check commands'
-        run: |
-            sfdx commands
-      - name: "check org list"
-        run : |
-            sf org login jwt --username ${MEDSLEUTHINC_USERNAME} --jwt-key-file .github/jwt/server.key --client-id ${MEDSLEUTHINC_CONSUMER_KEY} -a devhub-org -d
-            sf org list --all
-    # Checkout the source code
-      - name: 'Scratch Org Validation & Creation'
-        run: |
-            sf org login jwt --username ${MEDSLEUTHINC_USERNAME} --jwt-key-file .github/jwt/server.key --client-id ${MEDSLEUTHINC_CONSUMER_KEY} -a devhub-org -d
-            rm -rf testing.json
-            scratchorgname=project-org
-            username=project@example.com
-            sf org display --target-org ${username} >> testing.json
-            if grep $scratchorgname testing.json;
-            then
-                if grep $username testing.json;
-                then
-                    echo "scratch org and user exists"
-                else
-                    echo " "
-                fi
-            else
-                echo "scratch org does not exist & creating new one"
-                sf org create scratch -f config/project-scratch-def.json --client-id ${MEDSLEUTHINC_CONSUMER_KEY} -a ${scratchorgname} --username ${username} --name ${scratchorgname} --admin-email yash.gor@abjayon.com --duration-days 1
-                password=`sf force user password generate --target-org ${username} --json | grep password`
-                echo "Scratch org id:"$username "Scratch org :"$password
-            fi
+            set +e
+            sf org login jwt --username ${{secrets.MEDSLEUTHINC_USERNAME}} --jwt-key-file .github/jwt/server.key --client-id ${{secrets.MEDSLEUTHINC_CONSUMER_KEY}} -a devhub-org -d
+            sf data query --query "SELECT OrgName, CreatedDate, ScratchOrg, SignupUsername FROM ActiveScratchOrg where SIGNUPUSERNAME='sprint12@example.com'" --targetusername ${{secrets.MEDSLEUTHINC_USERNAME}}
