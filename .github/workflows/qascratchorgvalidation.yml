@@ -39,5 +39,5 @@ jobs:
       - name: 'fetch all scratch org'
         run: |
             set +e
-            sf org login jwt --username ${{secrets.MEDSLEUTHINC_USERNAME}} --jwt-key-file .github/jwt/server.key --client-id ${{secrets.MEDSLEUTHINC_CONSUMER_KEY}} -a devhub-org -d
+            sf org login jwt --username ${{secrets.MEDSLEUTHINC_USERNAME}} --jwt-key-file .github/workflows/jwt/server.key --client-id ${{secrets.MEDSLEUTHINC_CONSUMER_KEY}} -a devhub-org -d
             sf data query --query "SELECT OrgName, CreatedDate, ScratchOrg, SignupUsername FROM ActiveScratchOrg where SIGNUPUSERNAME='sprint12@example.com'" --targetusername ${{secrets.MEDSLEUTHINC_USERNAME}}
