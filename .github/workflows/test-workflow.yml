@@ -1,0 +1,49 @@
+# Unique name for this workflow
+name: testing workflow trigger
+
+# Definition when the workflow should run
+
+on:
+  workflow_dispatch:
+  push:
+
+# Jobs to be executed
+env:
+  SPRINT_QA_ORG_NAME: test-org
+  SPRINT_QA_USER_NAME: test-org@example.com
+  ADMIN_EMAIL: yash.gor@abjayon.com
+jobs:
+
+ test_workflow:
+    name: test workflow
+    runs-on: ubuntu-latest
+    steps:
+    # Cache node_modules to speed up the process
+      - name: 'Setup Node Environment'
+        uses: actions/setup-node@v3
+        with:
+            node-version: '16'
+    # Install Salesforce CLI
+      - name: 'Install Salesforce CLI'
+        run: |
+            npm install @salesforce/cli --location=global
+            nodeInstallPath=$(npm config get prefix)
+            echo "$nodeInstallPath/bin" >> $GITHUB_PATH
+            sf --version
+            
+    # Run Salesforce CLI Scanner For Security checks
+      - name: 'Check for SF Update'
+        run: sf update
+        
+    # Install Salesforce CLI Scanner
+      - name: 'Install Salesforce CLI Scanner'
+        run: sf plugins install scanner
+
+    # Checkout the source code
+      - name: 'Checkout source code'
+        uses: actions/checkout@v3
+            
+    # values check
+      - name: 'Check values'
+        run: | 
+          echo $SPRINT_QA_ORG_NAME, $SPRINT_QA_USER_NAME, $ADMIN_EMAIL
