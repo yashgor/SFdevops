@@ -4,7 +4,6 @@ name: testing workflow trigger
 # Definition when the workflow should run
 
 on:
-  workflow_dispatch:
   push:
 
 # Jobs to be executed
@@ -45,5 +44,4 @@ jobs:
             
     # values check
       - name: 'Check values'
-        run: | 
-          echo $SPRINT_QA_ORG_NAME, $SPRINT_QA_USER_NAME, $ADMIN_EMAIL
+        run: sf data query --query "SELECT OrgName, CreatedDate, ScratchOrg, SignupUsername FROM ActiveScratchOrg where SIGNUPUSERNAME='${{ env.SPRINT_QA_USER_NAME }}' " --target-org ${{secrets.MEDSLEUTHINC_USERNAME}} --json
