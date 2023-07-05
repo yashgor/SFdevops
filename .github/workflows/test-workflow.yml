@@ -40,8 +40,10 @@ jobs:
 
     # Checkout the source code
       - name: 'Checkout source code'
-        uses: actions/checkout@v3
-            
+        uses: actions/checkout@v
+    # Authenticate dev hub
+      - name: 'Authenticate Dev Hub'
+        run: sf org login jwt --username ${{ secrets.MEDSLEUTHINC_USERNAME }} --jwt-key-file .github/jwt/server.key --client-id ${{ secrets.MEDSLEUTHINC_CONSUMER_KEY }} -a devhub-org -d
     # values check
       - name: 'Check values'
         run: sf data query --query "SELECT OrgName, CreatedDate, ScratchOrg, SignupUsername FROM ActiveScratchOrg where SIGNUPUSERNAME='${{ env.SPRINT_QA_USER_NAME }}' " --target-org ${{secrets.MEDSLEUTHINC_USERNAME}} --json
