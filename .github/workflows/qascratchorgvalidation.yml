@@ -4,7 +4,7 @@ name: Validationg Qa Scratch Org Automation
 # Definition when the workflow should run
 
 on:
-  push:
+  workflow_dispatch:
 
 # Jobs to be executed
 
