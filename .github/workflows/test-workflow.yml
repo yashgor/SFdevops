@@ -17,33 +17,22 @@ jobs:
     name: test workflow
     runs-on: ubuntu-latest
     steps:
-    # Cache node_modules to speed up the process
-      - name: 'Setup Node Environment'
-        uses: actions/setup-node@v3
-        with:
-            node-version: '16'
-    # Install Salesforce CLI
-      - name: 'Install Salesforce CLI'
-        run: |
-            npm install @salesforce/cli --location=global
-            nodeInstallPath=$(npm config get prefix)
-            echo "$nodeInstallPath/bin" >> $GITHUB_PATH
-            sf --version
-            
-    # Run Salesforce CLI Scanner For Security checks
-      - name: 'Check for SF Update'
-        run: sf update
-        
-    # Install Salesforce CLI Scanner
-      - name: 'Install Salesforce CLI Scanner'
-        run: sf plugins install scanner
-
-    # Checkout the source code
-      - name: 'Checkout source code'
-        uses: actions/checkout@v3
-    # Authenticate dev hub
-      - name: 'Authenticate Dev Hub'
-        run: sf org login jwt --username ${{ secrets.MEDSLEUTHINC_USERNAME }} --jwt-key-file .github/jwt/server.key --client-id ${{ secrets.MEDSLEUTHINC_CONSUMER_KEY }} -a devhub-org -d
     # values check
       - name: 'Check values'
-        run: sf data query --query "SELECT OrgName, CreatedDate, ScratchOrg, SignupUsername FROM ActiveScratchOrg where SIGNUPUSERNAME='${{ env.SPRINT_QA_USER_NAME }}' " --target-org ${{secrets.MEDSLEUTHINC_USERNAME}} --json
+        run: |
+
+          scratch_org_username=test-org
+          scratch_org_name=test-org@example.com
+
+          if [ $scratch_org_name != ${{ env.SPRINT_QA_ORG_NAME }} ] || [ $scratch_org_username != ${{ env.SPRINT_QA_USER_NAME }} ]
+          then
+              echo "The Scratch Org or User name are not the same hence exiting the pipeline"
+              exit 1
+          elif [ $scratch_org_name == ${{ env.SPRINT_QA_ORG_NAME }} ] && [ $scratch_org_username == ${{ env.SPRINT_QA_USER_NAME }} ]
+          then
+              echo "Scratch Org and User name exist"
+              echo "Authenticating to Scratch Org"
+          else
+              echo "Scratch Org not Exist"
+              echo "Creating scartch org"
+          fi
