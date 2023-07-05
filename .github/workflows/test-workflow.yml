@@ -40,7 +40,7 @@ jobs:
 
     # Checkout the source code
       - name: 'Checkout source code'
-        uses: actions/checkout@v
+        uses: actions/checkout@v3
     # Authenticate dev hub
       - name: 'Authenticate Dev Hub'
         run: sf org login jwt --username ${{ secrets.MEDSLEUTHINC_USERNAME }} --jwt-key-file .github/jwt/server.key --client-id ${{ secrets.MEDSLEUTHINC_CONSUMER_KEY }} -a devhub-org -d
