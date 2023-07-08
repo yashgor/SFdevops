@@ -2,32 +2,20 @@ name: Manual Inputs
 on:
   workflow_dispatch:
     inputs:
-      logLevel:
-        description: 'Log level'
-        required: true
-        default: 'warning'
-        type: choice
-        options:
-          - info
-          - warning
-          - debug
-      print_tags:
-        description: 'True to print to STDOUT'
-        required: true
-        type: boolean
-      tags:
-        description: 'Test scenario tags'
+
+      username:
+        description: 'Enter Username you want to create ScratchOrg with'
         required: true
         type: string
-      environment:
-        description: 'Environment to run tests against'
-        type: environment
+      validity:
+        description: 'Enter for how many days ScratchOrg should be active for'
+        type: integer
         required: true
 
 jobs:
   print-tag:
-    runs-on: ubuntu-latest
-    if:  ${{ inputs.print_tags }} 
+    runs-on: ubuntu-latest 
     steps:
-      - name: Print the input tag to STDOUT
-        run: echo  The tags are ${{ inputs.tags }} 
+      - name: Print the input obtained from user
+        run: |
+          echo "username is" ${{ inputs.username }} "& ScratchOrg should be avtive for" ${{ inputs.validity }} "days"
