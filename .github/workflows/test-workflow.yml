@@ -4,7 +4,7 @@ name: testing workflow trigger
 # Definition when the workflow should run
 
 on:
-  push:
+  workflow_dispatch:
 
 # Jobs to be executed
 env:
